@@ -1,0 +1,202 @@
+1 : device name : enp2s0
+2 : device name : any
+3 : device name : lo
+4 : device name : wlp3s0
+5 : device name : nflog
+6 : device name : nfqueue
+7 : device name : usbmon1
+8 : device name : usbmon2
+
+
+6 device can be open live
+0 : enp2s0
+1 : any
+2 : lo
+3 : wlp3s0
+4 : nflog
+5 : nfqueue
+0 enp2s0
+ip : 10.0.0.0
+mask : 255.255.255.0
+set filter success
+cnt = 0
+net map size 0
+671088650 4278190090  count = 0
+add new link
+src ip : 10.0.0.40
+dst ip : 10.0.0.255
+cnt = 1
+net map size 1
+219364535 721420298  count = 0
+add new link
+src ip : 183.60.19.13
+dst ip : 10.0.0.43
+cnt = 2
+net map size 2
+721420298 219364535  count = 0
+add new link
+src ip : 10.0.0.43
+dst ip : 183.60.19.13
+cnt = 3
+net map size 3
+721420298 219364535  count = 1
+cnt = 3
+net map size 3
+219364535 721420298  count = 1
+cnt = 3
+net map size 3
+721420298 219364535  count = 1
+cnt = 3
+net map size 3
+219364535 721420298  count = 1
+cnt = 3
+net map size 3
+721420298 219364535  count = 1
+cnt = 3
+net map size 3
+1426063370 4211081199  count = 0
+add new link
+src ip : 10.0.0.85
+dst ip : 239.255.255.250
+cnt = 4
+net map size 4
+219364535 721420298  count = 1
+cnt = 4
+net map size 4
+721420298 219364535  count = 1
+cnt = 4
+net map size 4
+219364535 721420298  count = 1
+cnt = 4
+net map size 4
+721420298 219364535  count = 1
+cnt = 4
+net map size 4
+219364535 721420298  count = 1
+cnt = 4
+net map size 4
+721420298 219364535  count = 1
+input the ip(Dotted decimal) :
+src ip : cnt = 4
+net map size 4
+219364535 721420298  count = 1
+cnt = 4
+net map size 4
+1124073482 4294967295  count = 0
+add new link
+src ip : 10.0.0.67
+dst ip : 255.255.255.255
+cnt = 5
+net map size 5
+1124073482 4278190090  count = 0
+add new link
+src ip : 10.0.0.67
+dst ip : 10.0.0.255
+cnt = 6
+net map size 6
+1124073482 4294967295  count = 1
+cnt = 6
+net map size 6
+1124073482 4294967295  count = 1
+cnt = 6
+net map size 6
+671088650 4278190090  count = 1
+cnt = 6
+net map size 6
+268435466 4294967295  count = 0
+add new link
+src ip : 10.0.0.16
+dst ip : 255.255.255.255
+cnt = 7
+net map size 7
+268435466 4278190090  count = 0
+add new link
+src ip : 10.0.0.16
+dst ip : 10.0.0.255
+cnt = 8
+net map size 8
+268435466 4294967295  count = 1
+cnt = 8
+net map size 8
+268435466 4294967295  count = 1
+cnt = 8
+net map size 8
+268435466 4294967295  count = 1
+cnt = 8
+net map size 8
+268435466 4278190090  count = 1
+cnt = 8
+net map size 8
+268435466 4294967295  count = 1
+cnt = 8
+net map size 8
+268435466 4294967295  count = 1
+cnt = 8
+net map size 8
+129842359 721420298  count = 0
+add new link
+src ip : 183.60.189.7
+dst ip : 10.0.0.43
+cnt = 9
+net map size 9
+721420298 129842359  count = 0
+add new link
+src ip : 10.0.0.43
+dst ip : 183.60.189.7
+cnt = 10
+net map size 10
+721420298 129842359  count = 1
+cnt = 10
+net map size 10
+838860810 4211081440  count = 0
+add new link
+src ip : 10.0.0.50
+dst ip : 224.0.0.251
+cnt = 11
+net map size 11
+671088650 4278190090  count = 1
+cnt = 11
+net map size 11
+721420298 1712815434  count = 0
+add new link
+src ip : 10.0.0.43
+dst ip : 74.125.23.102
+cnt = 12
+net map size 12
+721420298 1712815434  count = 1
+cnt = 12
+net map size 12
+721420298 3188176348  count = 0
+add new link
+src ip : 10.0.0.43
+dst ip : 220.181.7.190
+cnt = 13
+net map size 13
+721420298 3188176348  count = 1
+cnt = 13
+net map size 13
+219364535 721420298  count = 1
+cnt = 13
+net map size 13
+721420298 219364535  count = 1
+cnt = 13
+net map size 13
+1426063370 4278190090  count = 0
+add new link
+src ip : 10.0.0.85
+dst ip : 10.0.0.255
+cnt = 14
+net map size 14
+469762058 4294967295  count = 0
+add new link
+src ip : 10.0.0.28
+dst ip : 255.255.255.255
+cnt = 15
+net map size 15
+469762058 4278190090  count = 0
+add new link
+src ip : 10.0.0.28
+dst ip : 10.0.0.255
+cnt = 16
+net map size 16
+671088650 4278190090  count = 1

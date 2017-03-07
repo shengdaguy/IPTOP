@@ -1,0 +1,19 @@
+{
+    "daemon": 0,
+
+    "lbase_cfg": "/etc/lbase.conf",
+
+	"capture":
+	{
+        //the iftop default 2 10 40 
+		"update_inteval": 2
+	},
+
+	"report":
+	{
+        //unit : second
+        "interval": 3,
+        "curl": "http://nm.lbase.inc:9009/iptop"
+
+	}
+}

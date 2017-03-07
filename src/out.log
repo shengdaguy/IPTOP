@@ -1,0 +1,17 @@
+{"capture":{"update_inteval":2},"lbase_cfg":"/etc/lbase.conf","report":{"curl":"http://nm.lbase.inc:9009/iptop","report_interval":30}}
+{"addr":"8-8"}
+10.0.0.43
+10.0.5.120
+ip and ( host 10.0.0.43  or host 10.0.5.120  )
+0,Interface name : enp2s0 , Mac address : 30:5A:3A:BC:4B:7D 
+1,Interface name : wlp3s0 , Mac address : 28:C2:DD:68:59:1F 
+2 device can be open live
+0 : enp2s0
+1 : wlp3s0
+ip : 10.0.0.0
+mask : 255.255.255.0
+set filter success
+ip : 10.0.5.0
+mask : 255.255.255.0
+set filter success
+nothig to do

@@ -1,0 +1,162 @@
+一：基本要求概述
+
+1.最终版可能是C/S模式。 由sever指定过滤规则。 目前可以通过终端命令指定过滤规
+则。
+2.单线程 ？ 多线程？
+3.过滤规则 配置模块 
+
+
+
+二：具体模块分析
+1.过滤规则：
+    a.复制所有的IP包。然后根据根据过滤规则 统计。
+
+2.监控所有网卡： 
+    网卡获得：1.通过pcap接口获得。 2.shell脚本得到。
+    然后通过程序删选。
+    3.检测pcap_if_t->name为any网卡：the description: Pseudo-device that captures on all
+    interfaces
+
+3.数据结构：
+    a.map<map<uint32_t , uint32_t>, data>  key <--> ip:ip   value <-->  struct data
+    struct data{
+        bool is_connected;
+        double trans_rate;
+    }
+
+4.总体架构：
+    监听线程： 监听所有网卡：制定filter
+    收集所有IP包。并维护全局数据结构net_info： 
+
+    交互线程(可能是来自终端的输入也可能是定期想服务端发送数据包 也可能是来自
+    服务端的查询)
+    使用合适的锁(读写锁)或者无锁队列来达读取全局net_info 并交互。
+
+5. 暂时没考虑到网卡的增加 IP的更改等情况。
+
+
+三：编程过程记录
+1.int pcap_findalldevs(pcap_if_t **alldevsp, char *errbuf); 
+其中一个dev->name 为any的网卡是什么鬼？
+2.通过findalldevs的方式 会得到多于网卡数目的pcap_t的设备。why?
+3.应该写一个很好的pcap-filter
+4./*
+  * any device 是0.0.0.0 为什么第一次监测时捕捉不到enp2s0的IP包 
+  * 另外为什么 多个IP绑定一个网卡 libpcap是怎么处理的。
+  * 观察返回的IP 10.0.0.0  子网掩码： 255.255.255.0 
+  * IP: 127.0.0.0 子网掩码： 255.0.0.0
+  * IP: 0.0.0.0 子网掩码： 0.0.0.0 
+  * ==> 1.这个IP是根据子网掩码而设置出来的。而不是ip addr看到的网址
+  * 另外一个网卡多个IP。多个IP都要符合 同一个网段(子网掩码)
+  *     2.libpcap的网卡是根据子网掩码来区分的。
+  *     所以any拦截不到10.0.0.59的情况。
+  */
+5.pcap_loop 的原理是回调函数。也就是驱动触发。所以要本身公共的数据要加锁。
+map通过两个<来判断是否相等，不用==。
+
+所以你的问题是：
+1.如何定义两个Info小于关系
+2.定义的小于关系是否和相等关系冲突
+==不需要实现，
+map确定相等的原理是 f(A,B)为假且f(B,A)为假时确定向等，
+典型的就是A<B不成立且B<A不成立时确定向等 
+
+参考：effictive STL ==> 好诡异的错误。。我擦　　现在还要赶L2-Adapter
+
+解决：　
+
+    bool operator < (const ip_link &B) const {
+        if (src_ip < B.src_ip) return true;
+    //    if (dst_ip < B.dst_ip) return true;
+        if (src_ip == B.src_ip && dst_ip < B.dst_ip) return true;
+
+        return false;
+    }
+
+(2, 3) < (2, 4)       (3, 1) < (2, 3)
+低级错误
+
+再看l-base -- routenode代码时发现的代码时发现
+可能自己的小于号定义的不对。
+可以进一步推理论证和结合C++/STL的实现　来解释现象(map.size
+大　但是遍历的实际元素数目少)
+
+5.要做好capture线程和主线程的交互。
+6.iftop 提供了-i 指定网卡 虽然一个网卡可能只绑定一个IP或者少量的IP。
+但是流经这个网卡的IP包可是各种各样很多。
+而且如果简单的使用lookup 会阻塞的。所以一个网卡新建一个监听线程？
+7.流量的统计方法和策略： a.是以太网包还是payload作为统计基数？
+目前统计以太网长度
+流量速率计算策略： a.不足一秒按照1s计算。 b.每隔10s重新统计计算  
+b.是否进行完备的IP包检验？ 长度 校验和等等。 只做长度检验 不做校验和检验
+
+8.filter 规则： tcp & udp  。。。 指定host为绑定网卡的公网IP 和 专线私网IP。
+
+
+9.TODO : 
+a.确认统计的流量速率数据可靠  ==> 通过对比 iftop -t 的数据
+和本机通过scp观察(-l 限速) 基本抓包没问题 统计的策略可以微调
+建议添加配置文件  2s已更新 
+b.curl json  和侯新源确定接口 并成功 
+c.确认程序性能  对机器资源的占用（cpu  内存）
+并提出必要的解决方案然后实施解决。
+d.pcap_loop是驱动模式  必要的话添加定时事件处理 必要的话清空断开的连接
+（connected 标志改为false） 
+e.添加配置文件： curl接口 自己的配置等
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+四：杂记
+1.获得指定网卡的的IP方法：ioctl 脚本
+获得所以绑定网卡的IP方法： getifaddr  shell脚本
